@@ -7,10 +7,10 @@ const app = new Hono();
 if (Deno.env.get("DEBUG") !== "true") {
     app.use("*", (c, next) => {
         c.header("Access-Control-Allow-Origin", "*");
-        c.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-        c.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-        c.header("Access-Control-Expose-Headers", "Content-Type, Authorization");
-        c.header("Access-Control-Allow-Credentials", "true");
+        c.header("Access-Control-Allow-Methods", "GET");
+        c.header("Access-Control-Allow-Headers", "Content-Type");
+        c.header("Access-Control-Expose-Headers", "Content-Type");
+        c.header("Access-Control-Allow-Credentials", "false");
 
         c.header(
             "Content-Security-Policy",

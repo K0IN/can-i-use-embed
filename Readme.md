@@ -66,39 +66,39 @@ https://can-i-use-embed-public.deno.dev/min-browser-version?features=webgl&filte
 
 ## Examples
 
-### Progressive Web App
+### Installable Progressive Web App
 
 ```markdown
-![PWA Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&filter=main)
+![PWA Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker:&features=manifests:webapp:serviceworker:&features=api:beforeinstallpromptevent:&filter=main)
 ```
 
-![PWA Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&filter=main)
+![PWA Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker:&features=manifests:webapp:serviceworker:&features=api:beforeinstallpromptevent:&filter=main)
 
 ### WebGL Application
 
 ```markdown
-![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=webgl2renderingcontext&filter=main)
+![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:htmlcanvaselement:getcontext:webgl2_context:&filter=main)
 ```
 
-![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=webgl2renderingcontext&filter=main)
+![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:htmlcanvaselement:getcontext:webgl2_context:&filter=main)
 
 ### Unsupported Feature (ambientlightsensor)
 
 Note features behind flags are shown as unsupported
 
 ```markdown
-![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=ambientlightsensor&filter=main)
+![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:ambientlightsensor:&filter=main)
 ```
 
-![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=ambientlightsensor&filter=main)
+![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:ambientlightsensor:&filter=main)
 
 ### Multiple Features (serviceworker, indexeddb, webgl2renderingcontext, abortcontroller)
 
 ```markdown
-![Multiple Features](https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&features=indexeddb&features=webgl2renderingcontext&features=abortcontroller&filter=main)
+![Multiple Features](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker:&features=api:indexeddb:&features=api:webgl2renderingcontext:&features=api:abortcontroller:&filter=main)
 ```
 
-![Multiple Features](https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&features=indexeddb&features=webgl2renderingcontext&features=abortcontroller&filter=main)
+![Multiple Features](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker:&features=api:indexeddb:&features=api:webgl2renderingcontext:&features=api:abortcontroller:&filter=main)
 
 ## Deployment
 
