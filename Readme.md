@@ -1,52 +1,63 @@
-# 🌐 Can I Use Embed
+# Can I Use Embed
 
-**Show browser compatibility for web features right in your README!**
+Generate browser compatibility badges for your projects.
 
-This tool generates beautiful SVG badges that display which browsers support specific web features. Perfect for open source projects, documentation, and anywhere you need to quickly communicate browser compatibility.
+This service creates SVG badges showing which browsers support specific web features, using Mozilla's official browser compatibility data.
+Currently it only supports javascript features, not browser features.
 
-## 🚀 What is this?
+## What it does
 
-Ever wanted to show users which browsers support the cool web APIs your project uses? This service creates dynamic compatibility badges using Mozilla's official browser compatibility data. Just specify the features you're using, and get a clean, informative badge showing minimum browser versions.
+Shows minimum browser versions required for web features you use in your project. Instead of manually checking compatibility tables, get a visual badge that updates automatically.
 
-## ✨ Quick Start
+## Quick Start
 
-Want to show that your project uses Service Workers? Just add this to your README:
+Add this to your README to show Service Worker support:
 
 ```markdown
 ![Browser Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&filter=main)
 ```
 
 Result:
+
 ![example-image](https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&filter=main)
 
-## 🎯 How to Use
+## Usage
 
-### Basic Usage
+### Basic syntax
 
 ```url
 https://can-i-use-embed-public.deno.dev/min-browser-version?features=FEATURE_NAME
 ```
 
-Replace `FEATURE_NAME` with any web feature (like `serviceworker`, `webgl`, `css-grid`, etc.)
+Replace `FEATURE_NAME` with any web feature like `serviceworker`, etc.
 
-### Multiple Features
+To see a full list of available features, check the [API endpoint](https://can-i-use-embed-public.deno.dev/all-features).
 
-Check compatibility for multiple features at once:
+### Multiple features
+
+Check several features at once:
 
 ```url
 https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&features=indexeddb&features=webgl
 ```
 
-### Filter by Browser Types
+### Browser filtering
 
-Use `&filter=` to focus on specific browsers:
+Use `&filter=` to target specific browsers:
 
-- `&filter=main` - Chrome, Firefox, Safari, Edge (most common)
-- `&filter=desktop` - Desktop browsers only
-- `&filter=mobile` - Mobile browsers only
-- `&filter=chrome` - Chrome and Chrome Android
-- `&filter=firefox` - Firefox and Firefox Android
-- `&filter=safari` - Safari and Safari iOS
+- `main` - Chrome, Firefox, Safari, Edge (recommended for most projects)
+- `desktop` - Desktop browsers only
+- `mobile` - Mobile browsers only (Chrome Android, Firefox Android, Safari iOS, Opera Mobile, WebViews, Samsung Internet)
+- `chrome` - Chrome and Chrome Android
+- `firefox` - Firefox and Firefox Android
+- `safari` - Safari and Safari iOS
+- `web` - Web browsers (includes all major browsers)
+- `legacy` - Older browsers like IE, Node.js, etc.
+- `chromium` - Chromium-based browsers (Chrome, Edge, Opera)
+- `webview` - WebView browsers (Android, iOS)
+- `standaloneEngines` - Standalone engines (Deno, Node.js)
+- `vr` - VR browsers (Oculus)
+- `all` - All browsers
 
 Example:
 
@@ -54,102 +65,62 @@ Example:
 https://can-i-use-embed-public.deno.dev/min-browser-version?features=webgl&filter=main
 ```
 
-## 📋 Popular Features to Check
+## Examples
 
-Here are some commonly used web features you might want to check:
+### Progressive Web App
 
-| Feature | Description |
-|---------|-------------|
-| `serviceworker` | Service Worker API |
-| `webgl` | WebGL graphics |
-| `indexeddb` | IndexedDB storage |
-| `css-grid` | CSS Grid Layout |
-| `css-flexbox` | CSS Flexbox |
-| `fetch` | Fetch API |
-| `websockets` | WebSocket API |
-| `webrtc` | WebRTC |
-| `geolocation` | Geolocation API |
-| `localStorage` | Local Storage |
+```markdown
+![PWA Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&filter=main)
+```
 
-## 🛠️ CLI Tool
+![PWA Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&filter=main)
 
-For local development and automation, use the CLI tool:
+### WebGL Application
+
+```markdown
+![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=webgl2renderingcontext&filter=main)
+```
+
+![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=webgl2renderingcontext&filter=main)
+
+### Unsupported Feature (ambientlightsensor)
+
+Note features behind flags are shown as unsupported
+
+```markdown
+![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=ambientlightsensor&filter=main)
+```
+
+![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=ambientlightsensor&filter=main)
+
+### Multiple Features (serviceworker, indexeddb, webgl2renderingcontext, abortcontroller)
+
+```markdown
+![Multiple Features](https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&features=indexeddb&features=webgl2renderingcontext&features=abortcontroller&filter=main)
+```
+
+![Multiple Features](https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&features=indexeddb&features=webgl2renderingcontext&features=abortcontroller&filter=main)
+
+## Deployment
+
+Want to run your own instance?
 
 ```bash
-# Show help
-deno run --allow-read cli.ts --help
-
-# List all available features
-deno run --allow-read cli.ts --list
-
-# Generate a badge for specific features
-deno run --allow-read --allow-write cli.ts --features serviceworker --filter main --output badge.svg
-
-# Check multiple features
-deno run --allow-read --allow-write cli.ts --features serviceworker --features webgl --filter main
-```
-
-## 🎨 Examples in the Wild
-
-### For a Progressive Web App
-
-```markdown
-![PWA Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&features=manifest&filter=main)
-```
-
-### For a WebGL Game
-
-```markdown
-![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=webgl&features=webgl2&filter=main)
-```
-
-### For a Modern CSS Layout
-
-```markdown
-![CSS Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=css-grid&features=css-flexbox&filter=main)
-```
-
-## 🔧 Self-Hosting
-
-Want to run your own instance? This is a Deno application:
-
-```bash
-# Clone the repository
-git clone https://github.com/your-username/can-i-use-embed.git
+# Clone and run locally
+git clone https://github.com/K0IN/can-i-use-embed.git
 cd can-i-use-embed
 
-# Run locally
-deno task dev
-
-# Or deploy to Deno Deploy
+# Deploy to Deno Deploy
 deno deploy main.ts
 ```
 
-## 📊 Available Endpoints
+## API Endpoints
 
-- `/min-browser-version` - Main badge endpoint
+- `/min-browser-version` - renders the badge
 - `/all-features` - Lists all available features (JSON)
 
-## 🤝 Contributing
+## Credits
 
-Found a bug or want to add a feature? Contributions are welcome!
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## 📝 License
-
-MIT License - feel free to use this in your projects!
-
-## 💡 Credits
-
-- Browser compatibility data from [MDN Browser Compat Data](https://github.com/mdn/browser-compat-data)
-- Built with [Deno](https://deno.land/) and [Hono](https://hono.dev/)
-- Icons from [Font Awesome](https://fontawesome.com/)
-
----
-
-Made with ❤️ for the web development community
+- Browser data: [MDN Browser Compat Data](https://github.com/mdn/browser-compat-data)
+- Built with: [Deno](https://deno.land/) and [Hono](https://hono.dev/)
+- Icons: [Font Awesome](https://fontawesome.com/)
