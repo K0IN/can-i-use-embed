@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+    ],
+    "settings": {
+        "triggerTaskOnSave.tasks": {
+            "build-images-tests": [
+                "rendering/*.tsx",
+                "rendering/*.ts"
+            ]
+        }
+    }
+}

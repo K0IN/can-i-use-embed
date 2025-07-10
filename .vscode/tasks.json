@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build-images-tests",
+            "type": "shell",
+            "command": "deno run --allow-read --allow-write --allow-net --allow-env ${workspaceFolder}/rendering/test-renders.tsx",
+            "presentation": {
+                "reveal": "never",
+                "panel": "shared",
+                "clear": true,
+                "echo": false
+            }
+        },
+        {
+            "label": "deno-start-dev",
+            "type": "shell",
+            "command": "deno task dev",
+            "options": {
+                "env": {
+                    "DEBUG": "true",
+                    "PORT": "3000",
+                },
+            },
+            "presentation": {
+                "reveal": "never",
+                "panel": "shared",
+                "clear": true,
+                "echo": false
+            },
+            "isBackground": true,
+        }
+    ]
+}

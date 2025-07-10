@@ -1,0 +1,46 @@
+{
+    "tasks": {
+        "dev": "deno run --allow-all --watch main.ts"
+    },
+    "imports": {
+        "@std/assert": "jsr:@std/assert@^1.0.0",
+        "chalk": "npm:chalk@^5.4.1",
+        "preact": "npm:preact@^10.26.6",
+        "preact-render-to-string": "npm:preact-render-to-string@^6.5.13",
+        "@std/path": "jsr:@std/path@^1.0.3",
+        "hono": "https://deno.land/x/hono@v4.1.0/mod.ts",
+        "fa-brands": "npm:@fortawesome/free-brands-svg-icons",
+        "fa-solid": "npm:@fortawesome/free-solid-svg-icons",
+        "browser-compat-data": "https://unpkg.com/@mdn/browser-compat-data",
+        "browser-list": "npm:browserslist@^4.21.0",
+        "caniuse-lite": "npm:caniuse-lite@^1.0.30001727"
+    },
+    "deploy": {
+        "project": "b141a2da-8e26-458e-9d96-caeaf8367343",
+        "exclude": [
+            "**/node_modules"
+        ],
+        "include": [],
+        "entrypoint": "main.ts"
+    },
+    "compilerOptions": {
+        "jsx": "precompile",
+        "jsxImportSource": "preact"
+    },
+    "fmt": {
+        "indentWidth": 4,
+        "lineWidth": 120,
+        "semiColons": true,
+        "singleQuote": false,
+        "trailingCommas": "onlyMultiLine",
+        "useBraces": "always",
+        "proseWrap": "preserve"
+    },
+    "lint": {
+        "rules": {
+            "tags": [
+                "recommended"
+            ]
+        }
+    }
+}

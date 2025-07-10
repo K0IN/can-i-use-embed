@@ -1,0 +1,22 @@
+{
+    "deno.enable": true,
+    "deno.codeLens.test": true,
+    "deno.lint": true,
+    "cSpell.words": [
+        "browsercompat",
+        "deployctl",
+        "nosniff",
+        "samsunginternet",
+        "wdth",
+        "wght",
+        "Xmark"
+    ],
+    "editor.defaultFormatter": "denoland.vscode-deno",
+    "deno.codeLens.references": true,
+    "deno.codeLens.implementations": true,
+    "deno.codeLens.referencesAllFunctions": true,
+    "deno.suggest.imports.autoDiscover": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "denoland.vscode-deno"
+    }
+}
