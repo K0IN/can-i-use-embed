@@ -20,7 +20,7 @@ jobs:
               with:
                   deno-version: lts
             - name: Run tests
-              run: deno test --unstable --allow-read --allow-env --allow-import
+              run: deno test --allow-read --allow-env --allow-import
 
     run-linter:
         runs-on: ubuntu-latest
