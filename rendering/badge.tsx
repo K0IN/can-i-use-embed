@@ -170,8 +170,8 @@ export function Badges(
 }
 
 export function RenderBadge(args: Parameters<typeof Badges>[0] & { rendering?: { vertical?: boolean } }): string {
-    if (args.rendering?.vertical) {
-    }
+    // if (args.rendering?.vertical) {
+    // }
 
     return renderToString(<Badges {...args} />);
 }
