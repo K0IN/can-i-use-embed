@@ -1,4 +1,4 @@
-name: Build frontend
+name: Build documentation
 
 on:
     push:
@@ -11,32 +11,29 @@ env:
     DENO_VERSION: v2.4.1
 
 jobs:
-    generate-wiki-pages:
+    generate-docs:
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
-
-            - name: Checkout wiki repository
-              uses: actions/checkout@v4
-              with:
-                  repository: ${{github.repository}}.wiki
-                  path: wiki
 
             - uses: denoland/setup-deno@v2
               with:
                   deno-version: ${{ env.DENO_VERSION }}
 
-            - name: Build files
-              run: deno run --allow-write --allow-import feature-list-generator/main.ts
+            - name: Build documentation
+              run: deno run --allow-read --allow-write --allow-import feature-list-generator/main.ts
 
-            - name: Move generated file
-              run: mv FeatureList.md wiki/FeatureList.md
-
-            - name: Push to wiki
+            - name: Commit and push documentation
               run: |
-                  cd wiki
                   git config --local user.email "action@github.com"
                   git config --local user.name "GitHub Action"
-                  git add FeatureList.md
-                  git diff-index --quiet HEAD || git commit -m "Add changes" && git push
+                  git add feature-list-generator/FeatureList.md
+                  if ! git diff-index --quiet HEAD; then
+                    git commit -m "Update feature list documentation [skip ci]"
+                    git push
+                  else
+                    echo "No changes to commit"
+                  fi
