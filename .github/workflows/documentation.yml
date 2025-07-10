@@ -16,15 +16,22 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
+
+            - name: Checkout wiki repository
+              uses: actions/checkout@v4
               with:
                   repository: ${{github.repository}}.wiki
                   path: wiki
+
             - uses: denoland/setup-deno@v2
               with:
                   deno-version: ${{ env.DENO_VERSION }}
 
-            - name: Run tests
+            - name: Build files
               run: deno run --allow-write --allow-import feature-list-generator/main.ts
+
+            - name: Move generated file
+              run: mv FeatureList.md wiki/FeatureList.md
 
             - name: Push to wiki
               run: |
