@@ -12,7 +12,10 @@ if (Deno.env.get("DEBUG") !== "true") {
         c.header("Access-Control-Expose-Headers", "Content-Type, Authorization");
         c.header("Access-Control-Allow-Credentials", "true");
 
-        c.header("Content-Security-Policy", "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self';");
+        c.header(
+            "Content-Security-Policy",
+            "default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self';",
+        );
         c.header("X-Content-Type-Options", "nosniff");
         c.header("X-Frame-Options", "DENY");
         c.header("X-XSS-Protection", "1; mode=block");
