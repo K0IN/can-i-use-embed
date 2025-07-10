@@ -16,18 +16,6 @@
         "browser-list": "npm:browserslist@4.25.1",
         "caniuse-lite": "npm:caniuse-lite@1.0.30001727"
     },
-    "deploy": {
-        "project": "b141a2da-8e26-458e-9d96-caeaf8367343",
-        "exclude": [
-            "**/node_modules"
-        ],
-        "include": [],
-        "entrypoint": "main.ts"
-    },
-    "compilerOptions": {
-        "jsx": "precompile",
-        "jsxImportSource": "preact"
-    },
     "fmt": {
         "indentWidth": 4,
         "lineWidth": 120,
