@@ -28,7 +28,7 @@ Result:
 https://can-i-use-embed-public.deno.dev/min-browser-version?features=FEATURE_NAME
 ```
 
-Replace `FEATURE_NAME` with any web feature like `serviceworker`, etc.
+Replace `FEATURE_NAME` with any web feature like `api:navigator:serviceworker`, etc.
 
 To see a full list of available features, check the [API endpoint](https://can-i-use-embed-public.deno.dev/all-features).
 
@@ -57,12 +57,6 @@ Use `&filter=` to target specific browsers:
 - `standaloneEngines` - Standalone engines (Deno, Node.js)
 - `vr` - VR browsers (Oculus)
 - `all` - All browsers
-
-Example:
-
-```url
-https://can-i-use-embed-public.deno.dev/min-browser-version?features=webgl&filter=main
-```
 
 ## Examples
 
