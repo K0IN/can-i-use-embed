@@ -28,10 +28,14 @@ Result:
 https://can-i-use-embed-public.deno.dev/min-browser-version?features=FEATURE_NAME&filter=FILTER
 ```
 
-Replace `FEATURE_NAME` with any web feature like `api:navigator:serviceworker`, etc. there can be multiple features separated by `&features=` (e.g. `&features=api:navigator:serviceworker&features=api:indexeddb`).
-Replace `FILTER` with the desired browser filter (e.g. `main`, `desktop`, `mobile`, etc.) if not set `all` will be used by default (see Browser filtering section below).
+**Parameters:**
 
-To see a full list of available features, check the [API endpoint](https://can-i-use-embed-public.deno.dev/all-features).
+- `features` - Web feature identifier (e.g., `api:navigator:serviceworker`)
+- `filter` - Target browsers: `main`, `desktop`, `mobile`, etc. (defaults to `all`)
+
+**Multiple features:** Add multiple `&features=` parameters to check several features at once.
+
+📋 [View all available features](https://can-i-use-embed-public.deno.dev/all-features)
 
 ### Multiple features
 
