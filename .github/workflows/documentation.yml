@@ -30,6 +30,6 @@ jobs:
               run: |
                   git config --local user.email "action@github.com"
                   git config --local user.name "GitHub Action"
-                  git add feature-list-generator/FeatureList.md
+                  git add FeatureList.md
                   git commit -m "Update feature list documentation [skip ci]"
                   git push
