@@ -13,12 +13,12 @@ Shows minimum browser versions required for web features you use in your project
 Add this to your README to show Service Worker support:
 
 ```markdown
-![Browser Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&filter=main)
+![Browser Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker&filter=main)
 ```
 
 Result:
 
-![example-image](https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&filter=main)
+![example-image](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker&filter=main)
 
 ## Usage
 
@@ -37,7 +37,7 @@ To see a full list of available features, check the [API endpoint](https://can-i
 Check several features at once:
 
 ```url
-https://can-i-use-embed-public.deno.dev/min-browser-version?features=serviceworker&features=indexeddb&features=webgl
+https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker&features=api:indexeddb&features=api:webgl
 ```
 
 ### Browser filtering
