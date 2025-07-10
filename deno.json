@@ -16,6 +16,10 @@
         "browser-list": "npm:browserslist@4.25.1",
         "caniuse-lite": "npm:caniuse-lite@1.0.30001727"
     },
+    "compilerOptions": {
+        "jsx": "precompile",
+        "jsxImportSource": "preact"
+    },
     "fmt": {
         "indentWidth": 4,
         "lineWidth": 120,
