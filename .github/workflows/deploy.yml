@@ -50,6 +50,6 @@ jobs:
               if: github.ref == 'refs/heads/main'
               uses: denoland/deployctl@v1
               with:
-                  project: "can-i-use-embed"
+                  project: "can-i-use-embed-public"
                   entrypoint: "main.ts"
                   root: "."
