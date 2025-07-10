@@ -1,6 +1,7 @@
 {
     "tasks": {
-        "dev": "deno run --allow-all --watch main.ts"
+        "dev": "deno run --allow-all --watch main.ts",
+        "update-deps": "deno run --allow-read --allow-write --allow-net jsr:@david/deno-outdated update"
     },
     "imports": {
         "@std/assert": "jsr:@std/assert@^1.0.0",
@@ -11,9 +12,9 @@
         "hono": "https://deno.land/x/hono@v4.1.0/mod.ts",
         "fa-brands": "npm:@fortawesome/free-brands-svg-icons",
         "fa-solid": "npm:@fortawesome/free-solid-svg-icons",
-        "browser-compat-data": "https://unpkg.com/@mdn/browser-compat-data",
-        "browser-list": "npm:browserslist@^4.21.0",
-        "caniuse-lite": "npm:caniuse-lite@^1.0.30001727"
+        "browser-compat-data": "https://unpkg.com/@mdn/browser-compat-data@latest",
+        "browser-list": "npm:browserslist@4.25.1",
+        "caniuse-lite": "npm:caniuse-lite@1.0.30001727"
     },
     "deploy": {
         "project": "b141a2da-8e26-458e-9d96-caeaf8367343",
