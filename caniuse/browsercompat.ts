@@ -214,3 +214,7 @@ export function getListOfFeatures(): string[] {
     const features = Object.keys(browserCompatData).map((feature) => feature.toLowerCase());
     return features;
 }
+
+export function getAllFeatures() {
+    return browserCompatData;
+}

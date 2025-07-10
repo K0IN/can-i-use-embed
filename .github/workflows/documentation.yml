@@ -1,0 +1,32 @@
+name: Build frontend
+
+on:
+    push:
+        branches:
+            - "main"
+    schedule:
+        - cron: "39 12 * * 6"
+
+env:
+    DENO_VERSION: v2.4.1
+
+jobs:
+    build-and-publish:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            - uses: denoland/setup-deno@v2
+              with:
+                  deno-version: ${{ env.DENO_VERSION }}
+
+            - name: Run tests
+              run: deno run --allow-write --allow-import feature-list-generator/main.ts
+
+            - name: Push to wiki
+              run: |
+                  cd wiki
+                  git config --local user.email "action@github.com"
+                  git config --local user.name "GitHub Action"
+                  git add FeatureList.md
+                  git diff-index --quiet HEAD || git commit -m "Add changes" && git push
