@@ -51,7 +51,8 @@ function findAllFeaturesRecursive(data: unknown, path = ""): Array<{ path: strin
                 // If the value has a support property, it is a feature
                 result.push({ path, feature: value });
             } else {
-                result.push(...findAllFeaturesRecursive(value, `${path}${key}:`));
+                const newPath = path ? `${path}:${key}` : key;
+                result.push(...findAllFeaturesRecursive(value, newPath));
             }
         }
     }
