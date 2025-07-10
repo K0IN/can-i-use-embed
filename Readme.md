@@ -25,10 +25,11 @@ Result:
 ### Basic syntax
 
 ```url
-https://can-i-use-embed-public.deno.dev/min-browser-version?features=FEATURE_NAME
+https://can-i-use-embed-public.deno.dev/min-browser-version?features=FEATURE_NAME&filter=FILTER
 ```
 
-Replace `FEATURE_NAME` with any web feature like `api:navigator:serviceworker`, etc.
+Replace `FEATURE_NAME` with any web feature like `api:navigator:serviceworker`, etc. there can be multiple features separated by `&features=` (e.g. `&features=api:navigator:serviceworker&features=api:indexeddb`).
+Replace `FILTER` with the desired browser filter (e.g. `main`, `desktop`, `mobile`, etc.) if not set `all` will be used by default (see Browser filtering section below).
 
 To see a full list of available features, check the [API endpoint](https://can-i-use-embed-public.deno.dev/all-features).
 
