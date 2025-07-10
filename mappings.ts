@@ -11,6 +11,7 @@ import {
     IconDefinition,
 } from "fa-brands";
 import { faMobileAlt, faVrCardboard } from "fa-solid";
+import { MinimumBrowserVersion } from "./caniuse/browsercompat.ts";
 
 export type BrowserName =
     | "chrome"
@@ -68,7 +69,7 @@ const browserIcons: Record<BrowserName, IconDefinition | undefined> = {
     webview_ios: faApple,
 };
 
-const filters: Record<string, BrowserName[]> = {
+export const filters: Record<string, BrowserName[]> = {
     all: Object.keys(browserNames) as BrowserName[],
     desktop: [
         "chrome",
@@ -78,6 +79,16 @@ const filters: Record<string, BrowserName[]> = {
         "nodejs",
         "opera",
         "safari",
+    ],
+    main: [
+        "chrome",
+        "edge",
+        "firefox",
+        "opera",
+        "safari",
+        "chrome_android",
+        "firefox_android",
+        "safari_ios",
     ],
     web: [
         "chrome",
@@ -104,16 +115,6 @@ const filters: Record<string, BrowserName[]> = {
         "samsunginternet_android",
         "webview_android",
         "webview_ios",
-    ],
-    main: [
-        "chrome",
-        "edge",
-        "firefox",
-        "opera",
-        "safari",
-        "chrome_android",
-        "firefox_android",
-        "safari_ios",
     ],
     legacy: [
         "ie",
@@ -159,6 +160,8 @@ const filters: Record<string, BrowserName[]> = {
     ],
 } as const;
 
+export const allFilterNames = Object.keys(filters) as (keyof typeof filters)[];
+
 export function getBrowserFilter(filter: keyof typeof filters): BrowserName[] {
     return filters[filter] ?? [];
 }
@@ -175,4 +178,34 @@ export function getBrowserName(
 ): string {
     const _ = language;
     return browserNames[browserName];
+}
+
+export function filterResult(
+    rawFilter: Array<string | undefined>,
+    result: MinimumBrowserVersion[],
+): MinimumBrowserVersion[] {
+    const filters = rawFilter
+        .map((f) => f?.toLowerCase())
+        .filter((f) => f !== undefined && f.length > 0) as string[];
+
+    if (filters.length === 0) {
+        return result;
+    }
+
+    const allowedBrowsers: BrowserName[] = [];
+    for (const filter of filters) {
+        const browserFilter = getBrowserFilter(filter);
+        if (browserFilter) {
+            allowedBrowsers.push(...browserFilter);
+        }
+    }
+
+    const uniqueFeatures = new Set(allowedBrowsers.map((b) => b.toLowerCase()));
+
+    if (uniqueFeatures.size === 0) {
+        return [];
+    }
+
+    return result
+        .filter((e) => uniqueFeatures.has(e.browser.toLowerCase()));
 }

@@ -1,35 +1,8 @@
 import { Context } from "hono";
-import { getLowestVersionForFeatures, MinimumBrowserVersion } from "../caniuse/browsercompat.ts";
+import { getLowestVersionForFeatures } from "../caniuse/browsercompat.ts";
 import { RenderBadge } from "../rendering/badge.tsx";
-import { BrowserName, getBrowserFilter, getBrowserIcon, getBrowserName } from "../mappings.ts";
+import { filterResult, getBrowserIcon, getBrowserName } from "../mappings.ts";
 import { faQuestion } from "fa-solid";
-
-function filterResult(rawFilter: Array<string | undefined>, result: MinimumBrowserVersion[]): MinimumBrowserVersion[] {
-    const filters = rawFilter
-        .map((f) => f?.toLowerCase())
-        .filter((f) => f !== undefined && f.length > 0) as string[];
-
-    if (filters.length === 0) {
-        return result;
-    }
-
-    const allowedBrowsers: BrowserName[] = [];
-    for (const filter of filters) {
-        const browserFilter = getBrowserFilter(filter);
-        if (browserFilter) {
-            allowedBrowsers.push(...browserFilter);
-        }
-    }
-
-    const uniqueFeatures = new Set(allowedBrowsers.map((b) => b.toLowerCase()));
-
-    if (uniqueFeatures.size === 0) {
-        return [];
-    }
-
-    return result
-        .filter((e) => uniqueFeatures.has(e.browser.toLowerCase()));
-}
 
 export function minBrowserVersion(context: Context) {
     // const { displayMode } = c.req.param();
