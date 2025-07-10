@@ -14,7 +14,7 @@ if (Deno.env.get("DEBUG") !== "true") {
 
         c.header(
             "Content-Security-Policy",
-            "default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self' 'unsafe-inline';",
+            "default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self' data;",
         );
         c.header("X-Content-Type-Options", "nosniff");
         c.header("X-Frame-Options", "DENY");
@@ -25,6 +25,7 @@ if (Deno.env.get("DEBUG") !== "true") {
 } else {
     console.log("Debug mode is enabled. CORS headers will not be set.");
 }
+
 //app.onError((err, c) => {
 //    console.error(`error throwing returning image ${err}`)
 //    return c.body(
