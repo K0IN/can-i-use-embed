@@ -25,7 +25,6 @@ jobs:
 
             - name: Push to wiki
               run: |
-                  cd wiki
                   git config --local user.email "action@github.com"
                   git config --local user.name "GitHub Action"
                   git add FeatureList.md
