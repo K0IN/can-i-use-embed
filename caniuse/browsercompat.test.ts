@@ -6,7 +6,7 @@ import { assertEquals } from "@std/assert/equals";
 import { BrowserName } from "../mappings.ts";
 
 Deno.test("getLowestVersionForFeature - existing feature", () => {
-    const result = getLowestVersionForFeature("AmbientLightSensor");
+    const result = getLowestVersionForFeature("api:ambientlightsensor:");
     validateForBrowser(result, "chrome", {
         isSupported: true,
         browser: "chrome",
@@ -43,7 +43,7 @@ Deno.test("getLowestVersionForFeature - existing feature", () => {
 });
 
 Deno.test("getLowestVersionForFeatures - multiple features", () => {
-    const features = ["AmbientLightSensor", "ServiceWorker", "AbortSignal"];
+    const features = ["api:ambientlightsensor:", "api:navigator:serviceworker:", "api:abortsignal:"];
     const result = getLowestVersionForFeatures(features);
 
     validateForBrowser(result, "chrome", {

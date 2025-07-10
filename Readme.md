@@ -3,7 +3,6 @@
 Generate browser compatibility badges for your projects.
 
 This service creates SVG badges showing which browsers support specific web features, using Mozilla's official browser compatibility data.
-Currently it only supports javascript features, not browser features.
 
 ## What it does
 

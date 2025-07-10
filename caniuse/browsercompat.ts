@@ -1,5 +1,5 @@
-import browserCompatData from "browser-compat-data" with { type: "json" };
-import type { CompatStatement, Identifier, SupportStatement } from "./compat.d.ts";
+import rawBrowserCompatData from "browser-compat-data" with { type: "json" };
+import type { CompatStatement, SupportStatement } from "./compat.d.ts";
 import { BrowserName } from "../mappings.ts";
 import { Version } from "./version.ts";
 
@@ -18,18 +18,65 @@ export type MinimumBrowserVersion =
         }
     );
 
+function isFeatureData(data: unknown): data is CompatStatement {
+    return (
+        data !== null && typeof data === "object" &&
+        /*"mdn_url" in data && */
+        /*"source_file" in data && */
+        /* "spec_url" in data && */
+        /* "status" in data && */
+        "support" in data
+        /*"tags" in data*/
+    );
+}
+
+function findAllFeaturesRecursive(data: unknown, path = ""): Array<{ path: string; feature: CompatStatement }> {
+    const result: Array<{ path: string; feature: CompatStatement }> = [];
+    if (!data || typeof data !== "object") {
+        return result; // Return empty if data is not an object
+    }
+
+    if (isFeatureData(data)) {
+        // If the data is a feature, return it directly
+        return [{ path, feature: data }];
+    }
+
+    for (const [key, value] of Object.entries(data)) {
+        if (key === "__meta" || !value) {
+            continue;
+        }
+
+        if (typeof value === "object" && !Array.isArray(value)) {
+            if (isFeatureData(value)) {
+                // If the value has a support property, it is a feature
+                result.push({ path, feature: value });
+            } else {
+                result.push(...findAllFeaturesRecursive(value, `${path}${key}:`));
+            }
+        }
+    }
+
+    return result;
+}
+
+const browserCompatData = Object.fromEntries(
+    findAllFeaturesRecursive(rawBrowserCompatData)
+        .map(({ path, feature }) => [path, feature]),
+);
+
 function findFeatureData(feature: string): { featureKey: string; compatData: CompatStatement } {
-    const data = (browserCompatData as Record<string, unknown>)["api"] as Identifier;
+    const data = browserCompatData;
+
     const normalizedFeature = feature.toLowerCase();
     const featureKey = Object.keys(data).find((key) => key.toLowerCase() === normalizedFeature);
 
-    if (!data || !featureKey || !data[featureKey] || !data[featureKey].__compat) {
+    if (!data || !featureKey || !data[featureKey] || !data[featureKey]) {
         throw new Error(`Feature "${feature}" not found in browser compatibility data.`);
     }
 
     return {
         featureKey,
-        compatData: data[featureKey].__compat,
+        compatData: data[featureKey],
     };
 }
 
@@ -162,19 +209,7 @@ export function getLowestVersionForFeatures(feature: string[]): Array<MinimumBro
     return Object.values(allBrowsers).map((browserInfo) => browserInfo);
 }
 
-// const result = getLowestVersionForFeatures([
-//     "AmbientLightSensor",
-//     "ServiceWorker",
-//     "AbortSignal",
-// ]);
-// console.log(result);
-
 export function getListOfFeatures(): string[] {
-    const data = (browserCompatData as Record<string, unknown>)["api"] as Identifier;
-    if (!data) {
-        throw new Error("Browser compatibility data not found.");
-    }
-    const features = Object.keys(data).map((feature) => feature.toLowerCase());
-
+    const features = Object.keys(browserCompatData).map((feature) => feature.toLowerCase());
     return features;
 }
