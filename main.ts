@@ -14,7 +14,7 @@ if (Deno.env.get("DEBUG") !== "true") {
 
         c.header(
             "Content-Security-Policy",
-            "default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self' data;",
+            "default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self' data:;",
         );
         c.header("X-Content-Type-Options", "nosniff");
         c.header("X-Frame-Options", "DENY");
