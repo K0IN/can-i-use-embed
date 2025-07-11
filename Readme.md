@@ -13,19 +13,22 @@ Shows minimum browser versions required for web features you use in your project
 Add this to your README to show Service Worker support:
 
 ```markdown
-![Browser Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker&filter=main)
+![Browser Support](https://can-i-use-embed.1k0.in/min-browser-version?features=api:navigator:serviceworker&filter=main)
 ```
 
 Result:
 
-![example-image](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker&filter=main)
+![example-image](https://can-i-use-embed.1k0.in/min-browser-version?features=api:navigator:serviceworker&filter=main)
 
 ## Usage
+
+There is a public instance of the service running at [can-i-use-embed-public.deno.dev](https://can-i-use-embed.1k0.in). You can use it to generate badges for your projects.
+If you think your service will be used by many people, consider running your own instance to avoid rate limits.
 
 ### Basic syntax
 
 ```url
-https://can-i-use-embed-public.deno.dev/min-browser-version?features=FEATURE_NAME&filter=FILTER
+https://can-i-use-embed.1k0.in/min-browser-version?features=FEATURE_NAME&filter=FILTER
 ```
 
 **Parameters:**
@@ -35,14 +38,14 @@ https://can-i-use-embed-public.deno.dev/min-browser-version?features=FEATURE_NAM
 
 **Multiple features:** Add multiple `&features=` parameters to check several features at once.
 
-📋 [View all available features](https://can-i-use-embed-public.deno.dev/all-features)
+📋 [View all available features](https://can-i-use-embed.1k0.in/all-features)
 
 ### Multiple features
 
 Check several features at once:
 
 ```url
-https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker&features=api:indexeddb&features=api:webgl
+https://can-i-use-embed.1k0.in/min-browser-version?features=api:navigator:serviceworker&features=api:indexeddb&features=api:webgl
 ```
 
 ### Browser filtering
@@ -68,36 +71,36 @@ Use `&filter=` to target specific browsers:
 ### Installable Progressive Web App
 
 ```markdown
-![PWA Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker&features=manifests:webapp:serviceworker&features=api:beforeinstallpromptevent&filter=main)
+![PWA Support](https://can-i-use-embed.1k0.in/min-browser-version?features=api:navigator:serviceworker&features=manifests:webapp:serviceworker&features=api:beforeinstallpromptevent&filter=main)
 ```
 
-![PWA Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker&features=manifests:webapp:serviceworker&features=api:beforeinstallpromptevent&filter=main)
+![PWA Support](https://can-i-use-embed.1k0.in/min-browser-version?features=api:navigator:serviceworker&features=manifests:webapp:serviceworker&features=api:beforeinstallpromptevent&filter=main)
 
 ### WebGL Application
 
 ```markdown
-![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:htmlcanvaselement:getcontext:webgl2_context&filter=main)
+![WebGL Support](https://can-i-use-embed.1k0.in/min-browser-version?features=api:htmlcanvaselement:getcontext:webgl2_context&filter=main)
 ```
 
-![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:htmlcanvaselement:getcontext:webgl2_context&filter=main)
+![WebGL Support](https://can-i-use-embed.1k0.in/min-browser-version?features=api:htmlcanvaselement:getcontext:webgl2_context&filter=main)
 
 ### Unsupported Feature (ambientlightsensor)
 
 Note features behind flags are shown as unsupported
 
 ```markdown
-![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:ambientlightsensor&filter=main)
+![WebGL Support](https://can-i-use-embed.1k0.in/min-browser-version?features=api:ambientlightsensor&filter=main)
 ```
 
-![WebGL Support](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:ambientlightsensor&filter=main)
+![WebGL Support](https://can-i-use-embed.1k0.in/min-browser-version?features=api:ambientlightsensor&filter=main)
 
 ### Multiple Features (serviceworker, indexeddb, webgl2renderingcontext, abortcontroller)
 
 ```markdown
-![Multiple Features](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker&features=api:indexeddb&features=api:webgl2renderingcontext&features=api:abortcontroller&filter=main)
+![Multiple Features](https://can-i-use-embed.1k0.in/min-browser-version?features=api:navigator:serviceworker&features=api:indexeddb&features=api:webgl2renderingcontext&features=api:abortcontroller&filter=main)
 ```
 
-![Multiple Features](https://can-i-use-embed-public.deno.dev/min-browser-version?features=api:navigator:serviceworker&features=api:indexeddb&features=api:webgl2renderingcontext&features=api:abortcontroller&filter=main)
+![Multiple Features](https://can-i-use-embed.1k0.in/min-browser-version?features=api:navigator:serviceworker&features=api:indexeddb&features=api:webgl2renderingcontext&features=api:abortcontroller&filter=main)
 
 ## Deployment
 
