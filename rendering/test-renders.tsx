@@ -1,6 +1,7 @@
 import * as path from "@std/path";
 import { RenderBadge } from "./badge.tsx";
 import { faChrome, faFirefox, faSafari } from "fa-brands";
+import { RenderError } from "./error.tsx";
 
 if (import.meta.main) {
     {
@@ -33,6 +34,16 @@ if (import.meta.main) {
         });
         await Deno.writeFile(
             path.join(import.meta.dirname ?? "", "RenderBadge.svg"),
+            new TextEncoder().encode(svgString),
+        );
+    }
+    {
+        const svgString = RenderError({
+            error: "Loading the data failed and now im  here thanks test 123.",
+            tooltip: "This is a tooltip",
+        });
+        await Deno.writeFile(
+            path.join(import.meta.dirname ?? "", "RenderError.svg"),
             new TextEncoder().encode(svgString),
         );
     }

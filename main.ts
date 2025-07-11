@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { listAllFeatures } from "./endpoints/features.ts";
 import { minBrowserVersion } from "./endpoints/min-browser-version-for-feature.ts";
+import { RenderError } from "./rendering/error.tsx";
 
 const app = new Hono();
 
@@ -26,22 +27,20 @@ if (Deno.env.get("DEBUG") !== "true") {
     console.log("Debug mode is enabled. CORS headers will not be set.");
 }
 
-//app.onError((err, c) => {
-//    console.error(`error throwing returning image ${err}`)
-//    return c.body(
-//        `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="30">
-//            <rect width="800" height="600" fill="#f0f0f0" stroke="#ccc"/>
-//            <text x="10" y="20" font-family="Arial" font-size="16" fill="#333">Error ${err.message}</text>
-//        </svg>`,
-//        500,
-//        { 'Content-Type': 'image/svg+xml' }
-//    );
-// });
-
-// http://localhost:8000/min-browser-version?features=AmbientLightSensor&filter=chrome&filter=firefox
+app.onError((err, c) => {
+    console.error(`error throwing returning image ${err}`);
+    return c.body(
+        RenderError({ error: err.message }),
+        500,
+        { "Content-Type": "image/svg+xml" },
+    );
+});
 
 app.get("/all-features", listAllFeatures);
 app.get("/min-browser-version", minBrowserVersion);
+app.get("/", (c) => {
+    return c.text("Welcome to the Can I Use Embed API. Use /all-features to get a list of all features.");
+});
 
 Deno.serve({
     hostname: "0.0.0.0",
