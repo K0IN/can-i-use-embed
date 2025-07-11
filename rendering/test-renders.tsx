@@ -40,7 +40,6 @@ if (import.meta.main) {
     {
         const svgString = RenderError({
             error: "Loading the data failed and now im  here thanks test 123.",
-            tooltip: "This is a tooltip",
         });
         await Deno.writeFile(
             path.join(import.meta.dirname ?? "", "RenderError.svg"),

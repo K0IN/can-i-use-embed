@@ -36,10 +36,30 @@ app.onError((err, c) => {
     );
 });
 
+app.notFound((c) => {
+    return c.body(
+        RenderError({
+            error:
+                "The requested resource was not found. use /min-browser-version to get a badge for a specific feature.",
+        }),
+        404,
+        { "Content-Type": "image/svg+xml" },
+    );
+});
+
 app.get("/all-features", listAllFeatures);
 app.get("/min-browser-version", minBrowserVersion);
 app.get("/", (c) => {
-    return c.text("Welcome to the Can I Use Embed API. Use /all-features to get a list of all features.");
+    return c.text(
+        `Welcome to the Can I Use Embed API.
+Use /all-features to get a list of all features.
+Use /min-browser-version?features=FEATURE_NAME&filter=FILTER_NAME to get the minimum browser version for a specific feature.
+Example: /min-browser-version?features=api:navigator:serviceworker&filter=chrome
+
+for documentation visit: https://github.com/K0IN/can-i-use-embed`,
+        200,
+        { "Content-Type": "text/plain" },
+    );
 });
 
 Deno.serve({

@@ -9,10 +9,8 @@ export function minBrowserVersion(context: Context) {
 
     const { features, filter } = context.req.queries();
     if (!features || features.length === 0) {
-        return context.body(
-            "Feature parameter is required. Please provide at least one feature to check. Example: ?features=AbortController",
-            400,
-            { "Content-Type": "text/plain" },
+        throw new Error(
+            "No features provided. Please provide at least one feature to check the minimum browser version.",
         );
     }
 
