@@ -43,13 +43,13 @@ Deno.test("getLowestVersionForFeature - existing feature", () => {
 });
 
 Deno.test("getLowestVersionForFeatures - multiple features", () => {
-    const features = ["api:ambientlightsensor", "api:navigator:serviceworker", "api:abortsignal"];
+    const features = ["api:ambientlightsensor", "api:abortcontroller", "api:sensor"];
     const result = getLowestVersionForFeatures(features);
 
     validateForBrowser(result, "chrome", {
         isSupported: true,
         browser: "chrome",
-        minimumVersion: new Version(66, 0, 0),
+        minimumVersion: new Version(67, 0, 0),
         partialSupport: false,
         isBehindFlag: true,
     });
