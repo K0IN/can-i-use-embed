@@ -3,8 +3,7 @@ import { faCheck, faXmark } from "fa-solid";
 import { Icon } from "./icon.tsx";
 import { getTextWidth } from "./get-text-size.ts";
 import { renderToString } from "preact-render-to-string";
-import { loadEmbeddableFontSync } from "./load-font.ts";
-import { css } from "./css-fake-function.ts";
+import { baseStyle } from "./css.ts";
 
 function getRenderBrowserWithCheckmarkWidth(
     browserName: string,
@@ -14,7 +13,7 @@ function getRenderBrowserWithCheckmarkWidth(
     return Math.max(110, versionStartX + getTextWidth(version ?? "") + 10 + 20);
 }
 
-export function RenderBrowserWithCheckmark(
+function RenderBrowserWithCheckmark(
     { icon, browserName, supported, version }: {
         icon: IconDefinition;
         browserName: string;
@@ -106,51 +105,14 @@ export function Badges(
         ),
     );
 
-    const robotFont = loadEmbeddableFontSync(
-        "./rendering/roboto/Roboto-VariableFont_wdth,wght.woff2",
-    );
-
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width={maxWidth}
-            height={browsers.length * (lineHeight + linePadding) - linePadding}
+            height={(browsers.length * lineHeight) + ((browsers.length - 1) * linePadding)}
         >
             <defs>
-                <style>
-                    {css`
-                        @font-face {
-                            font-family: "Roboto";
-                            src: url("${robotFont}") format("woff2");
-                            font-weight: normal;
-                            font-style: normal;
-                        }
-
-                        text {
-                            font-family: "Roboto", "Arial", sans-serif;
-                        }
-
-                        :root {
-                            --badge-bg-color: #f8f9fa;
-                            --badge-border-color: #e9ecef;
-                            --badge-text-color: #000;
-                            --badge-text-color-light: #666;
-                            --badge-checkmark-color: #34a853;
-                            --badge-xmark-color: #ea4335;
-                        }
-
-                        @media (prefers-color-scheme: dark) {
-                            :root {
-                                --badge-bg-color: #343a40;
-                                --badge-border-color: #495057;
-                                --badge-text-color: #f8f9fa;
-                                --badge-text-color-light: #adb5bd;
-                                --badge-checkmark-color: #28a745;
-                                --badge-xmark-color: #dc3545;
-                            }
-                        }
-                    `}
-                </style>
+                <style>{baseStyle}</style>
             </defs>
 
             {browsers.map((line, index) => (
