@@ -25,7 +25,8 @@ export class Version {
     }
 
     isEqualTo(other: Version): boolean {
-        return this.major === other.major && this.minor === other.minor &&
-            this.patch === other.patch;
+        return this.major === other.major &&
+            (this.minor ?? 0) === (other.minor ?? 0) &&
+            (this.patch ?? 0) === (other.patch ?? 0);
     }
 }
