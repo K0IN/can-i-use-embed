@@ -22,7 +22,7 @@ Result:
 
 ## Usage
 
-There is a public instance of the service running at [can-i-use-embed-public.deno.dev](https://can-i-use-embed.1k0.in). You can use it to generate badges for your projects.
+There is a public instance of the service running at [can-i-use-embed.1k0.in](https://can-i-use-embed.1k0.in). You can use it to generate badges for your projects.
 If you think your service will be used by many people, consider running your own instance to avoid rate limits.
 
 ### Basic syntax
