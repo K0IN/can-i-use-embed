@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Can I Use Embed API Examples</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      .description {
+        font-size: 12px;
+        color: #666;
+        font-style: italic;
+      }
+
+      .endpoint-title {
+        font-weight: bold;
+        color: #333;
+        margin: 20px 0 10px 0;
+      }
+
+      .info-box {
+        background-color: #e8f4f8;
+        border: 1px solid #bee5eb;
+        border-radius: 4px;
+        padding: 15px;
+        margin: 20px 0;
+      }
+
+      .api-call {
+        font-family: monospace;
+        font-size: 11px;
+        background-color: #f8f9fa;
+        padding: 4px;
+        border-radius: 3px;
+        word-break: break-all;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .result-cell {
+        max-width: 400px;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Can I Use Embed API Examples</h1>
+
+    <div class="info-box">
+      <h3>API Features:</h3>
+      <ul>
+        <li>
+          <strong>Case-insensitive feature lookup:</strong> Works with WebGL,
+          webgl, WEBGL, etc.
+        </li>
+        <li>
+          <strong>Flag support:</strong> Shows 'requires_flags' status for
+          features that need special configuration
+        </li>
+        <li>
+          <strong>Multiple features:</strong> Combine multiple features to get
+          the highest required version
+        </li>
+        <li>
+          <strong>Browser filtering:</strong> Filter results to specific
+          browsers using the filter parameter
+        </li>
+        <li>
+          <strong>SVG output:</strong> All endpoints return SVG images for easy
+          embedding
+        </li>
+      </ul>
+    </div>
+
+    <div class="endpoint-title">Available Endpoints:</div>
+    <ul>
+      <li>
+        <strong>/all-features</strong> - Get list of all available features
+        (JSON)
+      </li>
+      <li>
+        <strong>/min-browser-version</strong> - Get minimum browser versions for
+        features (SVG)
+      </li>
+      <li>
+        <strong>/supported-browsers</strong> - Get supported browsers for
+        features (SVG)
+      </li>
+      <li>
+        <strong>/target-version</strong> - Target version analysis (coming soon)
+      </li>
+    </ul>
+
+    <table>
+      <tr>
+        <th>Description</th>
+        <th>API Call</th>
+        <th>Result</th>
+      </tr>
+      <tr>
+        <td class="description">Basic sensor API with browser filter</td>
+        <td class="api-call">
+          min-browser-version?features=AmbientLightSensor&filter=chrome&filter=firefox
+        </td>
+        <td class="result-cell">
+          <img
+            alt="min-browser-version?features=AmbientLightSensor&filter=chrome&filter=firefox"
+            src="http://localhost:8000/min-browser-version?features=AmbientLightSensor&filter=chrome&filter=firefox"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="description">Multiple graphics features</td>
+        <td class="api-call">
+          min-browser-version?features=WebGL&features=ServiceWorker
+        </td>
+        <td class="result-cell">
+          <img
+            alt="min-browser-version?features=WebGL&features=ServiceWorker"
+            src="http://localhost:8000/min-browser-version?features=WebGL&features=ServiceWorker"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="description">Fetch API with major browser filter</td>
+        <td class="api-call">
+          min-browser-version?features=fetch&filter=chrome&filter=firefox&filter=safari
+        </td>
+        <td class="result-cell">
+          <img
+            alt="min-browser-version?features=fetch&filter=chrome&filter=firefox&filter=safari"
+            src="http://localhost:8000/min-browser-version?features=fetch&filter=chrome&filter=firefox&filter=safari"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="description">Supported browsers for AbortController</td>
+        <td class="api-call">supported-browsers?features=AbortController</td>
+        <td class="result-cell">
+          <img
+            alt="supported-browsers?features=AbortController"
+            src="http://localhost:8000/supported-browsers?features=AbortController"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="description">WebAssembly + WebGL support</td>
+        <td class="api-call">
+          supported-browsers?features=WebAssembly&features=WebGL&filter=chrome&filter=firefox
+        </td>
+        <td class="result-cell">
+          <img
+            alt="supported-browsers?features=WebAssembly&features=WebGL&filter=chrome&filter=firefox"
+            src="http://localhost:8000/supported-browsers?features=WebAssembly&features=WebGL&filter=chrome&filter=firefox"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="description">Web Components support</td>
+        <td class="api-call">
+          supported-browsers?features=CustomElements&features=ShadowDOM
+        </td>
+        <td class="result-cell">
+          <img
+            alt="supported-browsers?features=CustomElements&features=ShadowDOM"
+            src="http://localhost:8000/supported-browsers?features=CustomElements&features=ShadowDOM"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="description">Media API requirements</td>
+        <td class="api-call">
+          min-browser-version?features=MediaDevices&features=getUserMedia
+        </td>
+        <td class="result-cell">
+          <img
+            alt="min-browser-version?features=MediaDevices&features=getUserMedia"
+            src="http://localhost:8000/min-browser-version?features=MediaDevices&features=getUserMedia"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="description">Modern browser observation API</td>
+        <td class="api-call">
+          supported-browsers?features=IntersectionObserver&filter=chrome&filter=firefox&filter=safari&filter=edge
+        </td>
+        <td class="result-cell">
+          <img
+            alt="supported-browsers?features=IntersectionObserver&filter=chrome&filter=firefox&filter=safari&filter=edge"
+            src="http://localhost:8000/supported-browsers?features=IntersectionObserver&filter=chrome&filter=firefox&filter=safari&filter=edge"
+          />
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -43,7 +43,7 @@ function RenderBrowserWithCheckmark(
                 // debug rect
                 // <rect x={40} y="5" width={getTextWidth(browserName)} height="30" fill="rgba(255, 0, 0, 0.2)" />
             }
-            {supported && version && (
+            {supported && version && version.length > 0 && (
                 <text
                     x={versionStartX}
                     y="24"
@@ -59,7 +59,7 @@ function RenderBrowserWithCheckmark(
                         icon={faCheck}
                         size={20}
                         fill="var(--badge-checkmark-color)"
-                        x={versionStartX + getTextWidth(version ?? "")}
+                        x={versionStartX + getTextWidth(version && version.length > 0 ? version : "")}
                         y={10}
                     />
                 )
@@ -68,7 +68,7 @@ function RenderBrowserWithCheckmark(
                         icon={faXmark}
                         size={20}
                         fill="var(--badge-xmark-color)"
-                        x={versionStartX + getTextWidth(version ?? "")}
+                        x={versionStartX + getTextWidth("")}
                         y={10}
                     />
                 )}
@@ -92,6 +92,17 @@ export function Badges(
         >;
     },
 ) {
+    // Handle empty array case
+    if (browsers.length === 0) {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" width="110" height="0">
+                <defs>
+                    <style>{baseStyle}</style>
+                </defs>
+            </svg>
+        );
+    }
+
     const lineHeight = 40; // Height of each line in the SVG
     const linePadding = 2; // Padding between lines
 
@@ -105,11 +116,13 @@ export function Badges(
         ),
     );
 
+    const totalHeight = (browsers.length * lineHeight) + (Math.max(0, browsers.length - 1) * linePadding);
+
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width={maxWidth}
-            height={(browsers.length * lineHeight) + ((browsers.length - 1) * linePadding)}
+            height={totalHeight}
         >
             <defs>
                 <style>{baseStyle}</style>

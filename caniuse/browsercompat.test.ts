@@ -1,9 +1,16 @@
 import { assert } from "@std/assert/assert";
 import { assertExists } from "@std/assert/exists";
 import { Version } from "./version.ts";
-import { getLowestVersionForFeature, getLowestVersionForFeatures, MinimumBrowserVersion } from "./browsercompat.ts";
+import {
+    findFeatureSupport,
+    getLowestVersionForFeature,
+    getLowestVersionForFeatures,
+    MinimumBrowserVersion,
+} from "./browsercompat.ts";
 import { assertEquals } from "@std/assert/equals";
 import { BrowserName } from "../mappings.ts";
+import { SupportStatement } from "./compat.d.ts";
+import { assertThrows } from "@std/assert/throws";
 
 Deno.test("getLowestVersionForFeature - existing feature", () => {
     const result = getLowestVersionForFeature("api:ambientlightsensor");
@@ -43,13 +50,13 @@ Deno.test("getLowestVersionForFeature - existing feature", () => {
 });
 
 Deno.test("getLowestVersionForFeatures - multiple features", () => {
-    const features = ["api:ambientlightsensor", "api:navigator:serviceworker", "api:abortsignal"];
+    const features = ["api:ambientlightsensor", "api:abortcontroller", "api:sensor"];
     const result = getLowestVersionForFeatures(features);
 
     validateForBrowser(result, "chrome", {
         isSupported: true,
         browser: "chrome",
-        minimumVersion: new Version(66, 0, 0),
+        minimumVersion: new Version(67, 0, 0),
         partialSupport: false,
         isBehindFlag: true,
     });
@@ -58,6 +65,78 @@ Deno.test("getLowestVersionForFeatures - multiple features", () => {
         isSupported: false,
         browser: "deno",
     });
+});
+
+Deno.test("findFeatureSupport - find lowest feature on only adds", () => {
+    const versions: SupportStatement = [
+        { version_added: "56" },
+        { version_added: "60" },
+        { version_added: "62" },
+    ];
+
+    const result = findFeatureSupport(versions);
+    assertEquals(result.isSupported, true);
+    if (result.isSupported) {
+        assertEquals(result.minimumVersion.toString(), "56.0.0");
+        assertEquals(result.partialSupport, false);
+        assertEquals(result.isBehindFlag, false);
+    }
+});
+
+Deno.test("findFeatureSupport - find lowest feature on adds and removes", () => {
+    const versions: SupportStatement = [
+        { version_added: "1" },
+        { version_added: "2" },
+        { version_added: "3" },
+        { version_added: "3", version_removed: "3" },
+        { version_added: "4" },
+        { version_added: "15" },
+    ];
+
+    const result = findFeatureSupport(versions);
+    assertEquals(result.isSupported, true);
+    console.log("Result:", result);
+    if (result.isSupported) {
+        assertEquals(result.minimumVersion.toString(), "4.0.0");
+        assertEquals(result.partialSupport, false);
+        assertEquals(result.isBehindFlag, false);
+    }
+});
+
+Deno.test("findFeatureSupport - find lowest feature on adds and removes incorrect order", () => {
+    const versions: SupportStatement = [
+        { version_added: "1" },
+        { version_added: "3", version_removed: "3" },
+        { version_added: "2" },
+        { version_added: "15" },
+        { version_added: "3" },
+        { version_added: "4" },
+    ];
+
+    const result = findFeatureSupport(versions);
+    assertEquals(result.isSupported, true);
+    console.log("Result:", result);
+    if (result.isSupported) {
+        assertEquals(result.minimumVersion.toString(), "4.0.0");
+        assertEquals(result.partialSupport, false);
+        assertEquals(result.isBehindFlag, false);
+    }
+});
+
+Deno.test("findFeatureSupport - all removed", () => {
+    const versions: SupportStatement = [
+        { version_added: "1", version_removed: "2" },
+        { version_added: "2", version_removed: "3" },
+        { version_added: "3", version_removed: "4" },
+    ];
+    const result = findFeatureSupport(versions);
+    assertEquals(result.isSupported, false);
+    assertEquals(result.browser, "unknown");
+});
+
+Deno.test("findFeatureSupport - no versions", () => {
+    const versions = [] as unknown as SupportStatement;
+    assertThrows(() => findFeatureSupport(versions));
 });
 
 export function validateForBrowser(

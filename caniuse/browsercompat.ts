@@ -1,5 +1,5 @@
 import rawBrowserCompatData from "browser-compat-data" with { type: "json" };
-import type { CompatStatement, SupportStatement } from "./compat.d.ts";
+import type { CompatStatement, SimpleSupportStatement, SupportStatement } from "./compat.d.ts";
 import { BrowserName } from "../mappings.ts";
 import { Version } from "./version.ts";
 
@@ -71,7 +71,7 @@ function findFeatureData(feature: string): { featureKey: string; compatData: Com
     const normalizedFeature = feature.toLowerCase();
     const featureKey = Object.keys(data).find((key) => key.toLowerCase() === normalizedFeature);
 
-    if (!data || !featureKey || !data[featureKey] || !data[featureKey]) {
+    if (!data || !featureKey || !data[featureKey]) {
         throw new Error(`Feature "${feature}" not found in browser compatibility data.`);
     }
 
@@ -81,51 +81,105 @@ function findFeatureData(feature: string): { featureKey: string; compatData: Com
     };
 }
 
-function findFeatureSupport(
-    versions: SupportStatement | undefined,
+export function getVersionForSimpleSupportStatement(
+    version: SimpleSupportStatement,
+) {
+    if (version.version_removed) {
+        return Version.parse(version.version_removed);
+    }
+    return Version.parse(version.version_added);
+}
+
+export function findFeatureSupport(
+    versions: SupportStatement,
 ): MinimumBrowserVersion {
     const versionsAsArray = Array.isArray(versions) ? versions : [versions];
-    let currentStatus = {
-        browser: "unknown" as BrowserName,
-        isSupported: false,
-    } as MinimumBrowserVersion;
+    // let currentStatus = {
+    //     browser: "unknown" as BrowserName,
+    //     isSupported: false,
+    // } as MinimumBrowserVersion;
 
-    for (const version of versionsAsArray) {
-        if (!version) { continue; }
+    // let currentVersion = new Version(0, 0, 0);
 
-        if (version.version_removed) {
-            // it is no longer supported
-            // now we check the last version we knew
-            if (
-                currentStatus.isSupported &&
-                currentStatus.minimumVersion.isNewerThan(Version.parse(version.version_removed))
-            ) {
-                continue;
-            }
-            currentStatus = {
-                browser: "unknown" as BrowserName,
-                isSupported: false,
-            };
-        } else if (version.version_added) {
-            // it is already supported, we use the oldest version
-            if (
-                currentStatus.isSupported &&
-                Version.parse(version.version_added).isNewerThan(currentStatus.minimumVersion)
-            ) {
-                continue;
-            }
-
-            currentStatus = {
-                isSupported: true,
-                browser: "unknown" as BrowserName,
-                minimumVersion: Version.parse(version.version_added),
-                partialSupport: !!version.partial_implementation,
-                isBehindFlag: !!(version.flags && version.flags.length > 0),
-            };
-        }
+    if (versionsAsArray.length === 0) {
+        throw new Error("No versions provided for feature support check.");
     }
 
-    return currentStatus;
+    const orderedByVersion = versionsAsArray
+        .sort((a, b) => {
+            if (!a) {
+                return 1;
+            }
+            if (!b) {
+                return -1;
+            }
+
+            const aVersion = getVersionForSimpleSupportStatement(a);
+            const bVersion = getVersionForSimpleSupportStatement(b);
+            if (aVersion.isEqualTo(bVersion)) {
+                return a.version_removed ? 1 : -1; // Prefer versions that are not removed
+            }
+            if (!aVersion || !bVersion) {
+                return 0;
+            }
+
+            return aVersion.isNewerThan(bVersion) ? 1 : -1;
+        });
+
+    const lastRemoveStatementIndex = orderedByVersion
+        .findLastIndex((version) => Boolean(version.version_removed));
+
+    if (lastRemoveStatementIndex === -1) {
+        const oldestPossibleVersion = orderedByVersion[0];
+        if (!oldestPossibleVersion) {
+            throw new Error("No valid version found in support statements.");
+        }
+
+        if (!oldestPossibleVersion.version_added) {
+            return {
+                isSupported: false,
+                browser: "unknown" as BrowserName,
+            };
+        }
+
+        return {
+            isSupported: true,
+            browser: "unknown" as BrowserName,
+            minimumVersion: Version.parse(oldestPossibleVersion.version_added),
+            partialSupport: !!oldestPossibleVersion.partial_implementation,
+            isBehindFlag: !!(oldestPossibleVersion.flags && oldestPossibleVersion.flags.length > 0),
+        };
+    }
+
+    if (lastRemoveStatementIndex === orderedByVersion.length - 1) {
+        const lastVersion = orderedByVersion[lastRemoveStatementIndex];
+        if (!lastVersion) {
+            throw new Error("No valid version found in support statements.");
+        }
+
+        return {
+            isSupported: false,
+            browser: "unknown" as BrowserName,
+        };
+    }
+
+    const oldestPossibleVersion = orderedByVersion[lastRemoveStatementIndex + 1];
+    if (!oldestPossibleVersion) {
+        throw new Error("No valid version found in support statements.");
+    }
+    if (!oldestPossibleVersion.version_added) {
+        return {
+            isSupported: false,
+            browser: "unknown" as BrowserName,
+        };
+    }
+    return {
+        isSupported: true,
+        browser: "unknown" as BrowserName,
+        minimumVersion: Version.parse(oldestPossibleVersion.version_added),
+        partialSupport: !!oldestPossibleVersion.partial_implementation,
+        isBehindFlag: !!(oldestPossibleVersion.flags && oldestPossibleVersion.flags.length > 0),
+    };
 }
 
 export function getLowestVersionForFeature(
@@ -135,6 +189,10 @@ export function getLowestVersionForFeature(
     const currentStatus: Array<MinimumBrowserVersion> = [];
 
     for (const [browser, versions] of Object.entries(compatData.support || {})) {
+        if (!versions) {
+            throw new Error(`No versions found for browser "${browser}" in feature "${feature}".`);
+        }
+
         const statusForBrowser: MinimumBrowserVersion = {
             ...findFeatureSupport(versions),
             browser: browser as BrowserName,
@@ -145,7 +203,13 @@ export function getLowestVersionForFeature(
     return currentStatus;
 }
 
+getLowestVersionForFeature("api:ambientlightsensor");
+
 function mergeBrowserSupport(versionInfo: MinimumBrowserVersion[]): MinimumBrowserVersion {
+    if (versionInfo.length === 0) {
+        throw new Error("Cannot merge empty browser support array");
+    }
+
     let lowestVersion = new Version(0, 0, 0);
     let isSupported = false;
     let partialSupport = false;
