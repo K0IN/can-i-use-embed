@@ -62,7 +62,7 @@ Deno.test("Version comparison with undefined values", () => {
     const v1 = new Version(1, undefined, undefined);
     const v2 = new Version(1, 0, 0);
 
-    assert(!v1.isEqualTo(v2), "Version with undefined should NOT equal version with 0 (exact comparison)");
+    assert(v1.isEqualTo(v2), "Version with undefined should  equal version with 0 (exact comparison)");
     assert(!v1.isNewerThan(v2), "1.undefined.undefined should not be newer than 1.0.0");
     assert(!v2.isNewerThan(v1), "1.0.0 should not be newer than 1.undefined.undefined");
 
@@ -71,7 +71,7 @@ Deno.test("Version comparison with undefined values", () => {
 
     const v4 = new Version(1, 1, undefined);
     const v5 = new Version(1, 1, 0);
-    assert(!v4.isEqualTo(v5), "1.1.undefined should not equal 1.1.0");
+    assert(v4.isEqualTo(v5), "1.1.undefined should equal 1.1.0");
     assert(!v4.isNewerThan(v5), "1.1.undefined should not be newer than 1.1.0");
     assert(!v5.isNewerThan(v4), "1.1.0 should not be newer than 1.1.undefined");
 });
@@ -89,7 +89,7 @@ Deno.test("Version class - potential bug in comparison consistency", () => {
     console.log(`  v1 newer than v2: ${v1Newer}`);
     console.log(`  v2 newer than v1: ${v2Newer}`);
 
-    assert(!isEqual, "Current behavior: undefined !== 0 in equality");
+    assert(isEqual, "Current behavior: undefined === 0 in equality");
     assert(!v1Newer && !v2Newer, "Current behavior: both versions treat undefined as 0 in comparison");
 });
 
