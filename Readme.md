@@ -18,7 +18,7 @@ Add this to your README to show Service Worker support:
 
 Result:
 
-![example-image](https://can-i-use-embed.1k0.in/min-browser-version?features=api:navigator:serviceworker&filter=main)
+![example-image](https://can-i-use-embed.1k0.in/min-browser-version?features=api:navigator:serviceworker&filter=main&cache=false) <!-- github did somehow cache a broken version, the url change fixes this -->
 
 ## Usage
 
