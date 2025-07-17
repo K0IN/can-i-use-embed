@@ -19,12 +19,10 @@ export function minBrowserVersion(context: Context) {
 
     if (filteredVersions.length === 0) {
         const filterArray = Array.isArray(filter) ? filter : [filter];
-        return context.body(
+        throw new Error(
             `Invalid filter "${
                 filterArray.join(", ")
             }". Or the filter did not match any browsers. Please provide a valid browser filter.`,
-            400,
-            { "Content-Type": "text/plain" },
         );
     }
 

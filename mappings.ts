@@ -189,7 +189,7 @@ export function filterResult(
         .filter((f) => f !== undefined && f.length > 0) as string[];
 
     if (filters.length === 0) {
-        return result;
+        return [];
     }
 
     const allowedBrowsers: BrowserName[] = [];
